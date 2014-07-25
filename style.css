@@ -1,0 +1,38 @@
+/*
+    Document   : style．css
+    Created on : 2013-08-23 17:51 PM
+    Author     : mikelothar
+    Description:
+    Purpose of the stylesheet follows.
+*/
+
+root {
+    display: block;
+}
+
+body {
+    margin: 0 auto 20px;
+    padding: 0;
+    background: #acacac;
+    text-align: center;
+}
+td {
+    padding: 0 0 30px;
+    text-align: center;
+    font: 9px sans-serif;
+}
+table {
+    width: 100%;
+}
+img {
+    display: block;
+    margin: 20px auto 10px;
+    max-width: 900px;
+    outline: none;
+}
+img:active {
+    max-width: 100%;
+}
+a:focus {
+    outline: none;
+}
