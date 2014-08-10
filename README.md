@@ -2,4 +2,4 @@
 
 A simple PHP script to list all images in a folder.
 
-#### [Read more](http://mikelothar.com/show-all-images-in-a-folder-with-php/)
+You only need one of the PHP files, depending on whether you want to show the images sorted by date or by file name. Delete the one you don't need, and rename the other to simply `index.php`.
