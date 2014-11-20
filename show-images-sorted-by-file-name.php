@@ -21,3 +21,5 @@ for ($i = 0; $i < $count; $i++) {
 }
 echo '</table>';
 ?>
+</body>
+</html>
