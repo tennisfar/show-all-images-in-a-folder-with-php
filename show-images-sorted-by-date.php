@@ -31,3 +31,5 @@ foreach ($sortedArray as $filename) {
 }
 echo '</table>';
 ?>
+</body>
+</html>
