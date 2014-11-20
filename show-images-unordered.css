@@ -1,0 +1,48 @@
+body {
+    padding: 20px;
+    background: #acacac;
+}
+
+.row {
+    -moz-column-count: 3;
+    -moz-column-gap: 10px;
+    -webkit-column-count: 3;
+    -webkit-column-gap: 10px;
+    column-count: 3;
+    column-gap: 10px;
+    width: 100%;
+}
+
+.row img {
+    display: inline-block; /* Display inline-block, and absolutely NO FLOATS! */
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+@media (max-width: 1000px) {
+    .row {
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+        column-count: 2;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .row {
+        -moz-column-count: 1;
+        -moz-column-gap: 0;
+        -webkit-column-count: 1;
+        -webkit-column-gap: 0;
+        column-count: 1;
+        column-gap: 0;
+    }
+
+    .row img {
+        margin-bottom: 0;
+    }
+
+    body {
+        padding: 0;
+    }
+}
