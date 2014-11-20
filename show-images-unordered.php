@@ -8,6 +8,9 @@
 </head>
 <body>
  
+<div class="container">
+	<div class="row">
+
 <?php
 date_default_timezone_set("Europe/Copenhagen");
 $folder = 'img/';
@@ -23,36 +26,12 @@ for ($i = 0; $i < $count; $i++) {
 ksort($sortedArray);
 # krsort($sortedArray);
 
-/*
-echo '<table>';
+
 foreach ($sortedArray as $filename) {
-    echo '<tr><td>';
-    echo '<a name="'.$filename.'" href="#'.$filename.'"><img src="'.$filename.'" /></a>';
-    echo substr($filename,strlen($folder),strpos($filename, '.')-strlen($folder));
-    echo '</td></tr>';
+	echo '<img src="'.$filename.'" title="' . substr($filename,strlen($folder),strpos($filename, '.')-strlen($folder)) . '" />';
 }
-echo '</table>';
-*/
 ?>
 
-<div class="container">
-	<div class="row">
-		<img src="img/john315.jpg">
-		<img src="img/john318.jpg">
-		<img src="img/john319.jpg">
-		<img src="img/john324.jpg">
-		<img src="img/john337.jpg">
-		<img src="img/john315.jpg">
-		<img src="img/john318.jpg">
-		<img src="img/john319.jpg">
-		<img src="img/john324.jpg">
-		<img src="img/john337.jpg">
-		<img src="img/john337.jpg">
-		<img src="img/john315.jpg">
-		<img src="img/john318.jpg">
-		<img src="img/john319.jpg">
-		<img src="img/john324.jpg">
-		<img src="img/john337.jpg">
 	</div>
 </div>
 
