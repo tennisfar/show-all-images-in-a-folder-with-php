@@ -23,7 +23,7 @@ ksort($sortedArray);
 # krsort($sortedArray);
 
 echo '<table>';
-foreach ($sortedArray as &$filename) {
+foreach ($sortedArray as $filename) {
     echo '<tr><td>';
     echo '<a name="'.$filename.'" href="#'.$filename.'"><img src="'.$filename.'" /></a>';
     echo substr($filename,strlen($folder),strpos($filename, '.')-strlen($folder));
