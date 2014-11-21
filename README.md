@@ -1,6 +1,8 @@
 ##Show all images in a folder with PHP
 
-![github-issues-image] ![tag-release] ![release]
+[![Issues][github-issues-image]][issues-url]
+[![Tag][tag-image]][tag-url]
+[![Release][release-image]][release-url]
 
 A simple PHP script to list all images in a folder. 
 
@@ -9,7 +11,10 @@ You only need one of the PHP files, depending on whether you want to show the im
 
 
 [github-issues-image]: http://img.shields.io/github/issues/show-all-images-in-a-folder-with-php/mikelothar.svg?style=flat
+[tag-image]: http://img.shields.io/github/tag/mikelothar/show-all-images-in-a-folder-with-php.svg?style=flat
+[release-image]: http://img.shields.io/github/release/mikelothar/show-all-images-in-a-folder-with-php.svg?style=flat
+
 [issues-url]: https://github.com/mikelothar/show-all-images-in-a-folder-with-php/issues
-[npm-url]: #
-[tag-release]: http://img.shields.io/github/tag/mikelothar/show-all-images-in-a-folder-with-php.svg?style=flat
-[release]: http://img.shields.io/github/release/mikelothar/show-all-images-in-a-folder-with-php.svg?style=flat
+[tag-url]: https://github.com/mikelothar/show-all-images-in-a-folder-with-php/archive/master.zip
+[release-url]: https://github.com/mikelothar/show-all-images-in-a-folder-with-php/archive/master.zip
+
