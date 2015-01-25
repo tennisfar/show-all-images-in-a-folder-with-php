@@ -10,8 +10,8 @@
 <?php
 date_default_timezone_set("Europe/Copenhagen");
 $folder = 'img/';
-$filetype = '*.*';
-$files = glob($folder.$filetype);
+$filetype = '{*.jpg,*.JPG,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
+$files = glob($folder.$filetype, GLOB_BRACE);
 $count = count($files);
  
 $sortedArray = array();
@@ -20,7 +20,7 @@ for ($i = 0; $i < $count; $i++) {
 }
  
 ksort($sortedArray);
-# krsort($sortedArray);
+#krsort($sortedArray);
 
 echo '<table>';
 foreach ($sortedArray as $filename) {
