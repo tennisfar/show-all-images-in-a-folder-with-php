@@ -15,14 +15,14 @@ You'll need PHP on your server in order for this to work.
 This works out of the box, so you can either Git clone the repository, or download the zip.
 
 ##### The stripped down setup
-Add `ins-imgs.php` and `ins-imgs.css` in your root folder (or wherever your index file is).
+Add [`ins-imgs.php`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.php) and [`ins-imgs.css`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.css) in your root folder (or wherever your index file is).
 
 In your index HTML, insert this:
 
     <!-- insert images here -->
     <script src="ins-imgs.php"></script>
 
-If your images are not located in `img/`, then modify `ins-imgs.php` here:
+If your images are not located in `img/`, then modify [`ins-imgs.php`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.php) here:
     
     # Path to image folder
     $imagefolder = 'img/';
