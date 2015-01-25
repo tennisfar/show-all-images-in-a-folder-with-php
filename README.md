@@ -12,9 +12,10 @@ The way I use to show it to the client is by giving them a link to a place where
 You'll need PHP on your server in order for this to work.
 
 #### Setup
+##### The easy way
 This works out of the box, so you can either Git clone the repository, or download the zip.
 
-##### The stripped down setup
+##### The <del>hard</del> <i>other</i> way
 Add [`ins-imgs.php`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.php) and [`ins-imgs.css`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.css) in your root folder (or wherever your index file is).
 
 In your index HTML, insert this:
@@ -22,10 +23,17 @@ In your index HTML, insert this:
     <!-- insert images here -->
     <script src="ins-imgs.php"></script>
 
+
+#### Settings
 If your images are not located in `img/`, then modify [`ins-imgs.php`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.php) here:
     
     # Path to image folder
     $imagefolder = 'img/';
+
+By default, the images are listed with the newest at the top. This is based on the _last modified_ time stamp, which basically is the date you've uploaded the images to your server. If you want to list the oldest images at the top, then modify [`ins-imgs.php`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.php) here:
+
+    # Set to 'false' if you want the oldest images to appear first
+    $newest_images_first = true;
 
 #### Help, bugs, pull requests, etc.
 Very welcomed.
