@@ -9,6 +9,10 @@ When I work on homepage or mobile layouts, or anything like that, i prefer to fi
 
 The way I use to show it to the client is by giving them a link to a place where i keep this one PHP file, and a ‘img’ folder where i keep all the images in. The PHP file automatically shows all the images in this folder, and I don’t have to manually update anything, just upload to the folder.
 
+Images will display up to a max width of 900 pixels. Images larger than 900 pixels will show their full size if you click and hold on it.
+
+You can link to a specific image as they're link anchored. Just click on the specific image and copy the browser URL.
+
 You'll need PHP on your server in order for this to work.
 
 #### Setup
