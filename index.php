@@ -9,24 +9,24 @@
  
 <?php
 date_default_timezone_set("Europe/Copenhagen");
-$folder = 'img/';
-$filetype = '{*.jpg,*.JPG,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
-$files = glob($folder.$filetype, GLOB_BRACE);
-$count = count($files);
+$imagefolder = 'img/';
+$imagetypes = '{*.jpg,*.JPG,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
+$images = glob($imagefolder.$imagetypes, GLOB_BRACE);
+$count = count($images);
  
-$sortedArray = array();
+$sortedImages = array();
 for ($i = 0; $i < $count; $i++) {
-    $sortedArray[date ('YmdHis', filemtime($files[$i])) . $i] = $files[$i];
+    $sortedImages[date ('YmdHis', filemtime($images[$i])) . $i] = $images[$i];
 }
  
-ksort($sortedArray);
-#krsort($sortedArray);
+#ksort($sortedImages);
+krsort($sortedImages);
 
 echo '<table>';
-foreach ($sortedArray as $filename) {
+foreach ($sortedImages as $image) {
     echo '<tr><td>';
-    echo '<a name="'.$filename.'" href="#'.$filename.'"><img src="'.$filename.'" /></a>';
-    echo substr($filename,strlen($folder),strpos($filename, '.')-strlen($folder));
+    echo '<a name="'.$image.'" href="#'.$image.'"><img src="'.$image.'" /></a>';
+    echo substr($image,strlen($imagefolder),strpos($image, '.')-strlen($imagefolder));
     echo '</td></tr>';
 }
 echo '</table>';
