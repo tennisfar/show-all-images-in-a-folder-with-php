@@ -1,0 +1,30 @@
+ul.ins-imgs {
+    list-style-type: none;
+}
+
+li.ins-imgs-li {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+div.ins-imgs-img img {
+    max-width: 900px;
+    outline: none;
+    -webkit-box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+div.ins-imgs-img img:active {
+    max-width: 100%;
+}
+
+div.ins-imgs-label {
+    padding-top: 5px;
+    font: 9px sans-serif;
+}
+
+div.ins-imgs-img a:focus {
+    outline: none;
+}
