@@ -46,5 +46,3 @@ $newest_images_first = true;
 
 #### Help, bugs, pull requests, etc.
 Very welcomed.
-
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mikelothar/show-all-images-in-a-folder-with-php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
