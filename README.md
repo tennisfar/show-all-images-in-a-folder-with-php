@@ -30,19 +30,25 @@ In your index HTML, insert this:
 ```
 
 #### Settings
-If your images are not located in `img/`, then modify [`ins-imgs.php`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.php#L5-L6) here:
+In [`ins-imgs.php`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.php#L5-L17) you can find the following settings:
 
 ```php
-# Path to image folder
-$imagefolder = 'img/';
+    # Path to image folder
+    $imageFolder = 'img/';
+
+    # Show only these file types from the image folder
+    $imageTypes = '{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
+
+    # Set to true if you prefer sorting images by name
+    # If set to false, images will be sorted by date
+    $sortByImageName = false;
+
+    # Set to false if you want the oldest images to appear first
+    # This is only used if images are sorted by date (see above)
+    $newestImagesFirst = true;
 ```
 
-By default, the images are listed with the newest at the top. This is based on the _last modified_ time stamp, which basically is the date you've uploaded the images to your server. If you want to list the oldest images at the top, then modify [`ins-imgs.php`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.php#L21-L22) here:
-
-```php
-# Set to 'false' if you want the oldest images to appear first
-$newest_images_first = true;
-```
+Make the changes needed for your setup.
 
 #### Help, bugs, pull requests, etc.
 Very welcomed.
