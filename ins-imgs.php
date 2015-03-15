@@ -3,29 +3,41 @@
     header('Content-Type: text/javascript; charset=UTF-8');
 
     # Path to image folder
-    $imagefolder = 'img/';
+    $imageFolder = 'img/';
 
-    # Show only these file types in the image folder
-    $imagetypes = '{*.jpg,*.JPG,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
+    # Show only these file types from the image folder
+    $imageTypes = '{*.jpg,*.JPG,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
+
+    # Set to true if you prefer sorting images by name
+    # If set to false, images will be sorted by date
+    $sortByImageName = false;
+
+    # Set to false if you want the oldest images to appear first
+    # This is only used if images are sorted by date (see above)
+    $newestImagesFirst = true;
+
+    # The rest of the code is technical
 
     # Add images to array
-    $images = glob($imagefolder.$imagetypes, GLOB_BRACE);
+    $images = glob($imageFolder.$imageTypes, GLOB_BRACE);
 
-    # Sort the images based on its 'last modified' time stamp
-    $sortedImages = array();
-    $count = count($images);
-    for ($i = 0; $i < $count; $i++) {
-        $sortedImages[date ('YmdHis', filemtime($images[$i])).$i] = $images[$i];
-    }
-
-    # Set to 'false' if you want the oldest images to appear first
-    $newest_images_first = true;
-
-    # Sort images in array
-    if($newest_images_first) {
-        krsort($sortedImages);
+    # Sort images
+    if ($sortByImageName) {
+      $sortedImages = $images;
+      natsort($sortedImages);
     } else {
-        ksort($sortedImages);
+      # Sort the images based on its 'last modified' time stamp
+          $sortedImages = array();
+          $count = count($images);
+          for ($i = 0; $i < $count; $i++) {
+              $sortedImages[date ('YmdHis', filemtime($images[$i])).$i] = $images[$i];
+          }
+          # Sort images in array
+          if($newestImagesFirst) {
+              krsort($sortedImages);
+          } else {
+              ksort($sortedImages);
+          }
     }
 
     # Generate the HTML output
@@ -33,17 +45,17 @@
     foreach ($sortedImages as $image) {
 
         # Get the name of the image, stripped from image folder path and file type extension
-        $name = 'Image name: '.substr($image,strlen($imagefolder),strpos($image, '.')-strlen($imagefolder));
+        $name = 'Image name: '.substr($image,strlen($imageFolder),strpos($image, '.')-strlen($imageFolder));
 
         # Get the 'last modified' time stamp, make it human readable
-        $last_modified = '(last modified: '.date('F d Y H:i:s', filemtime($image)).')';
+        $lastModified = '(last modified: '.date('F d Y H:i:s', filemtime($image)).')';
 
         # Begin adding
         writeHtml('<li class="ins-imgs-li">');
         writeHtml('<div class="ins-imgs-img"><a name="'.$image.'" href="#'.$image.'">');
         writeHtml('<img src="'.$image.'" alt="'. $name.'" title="'. $name.'">');
         writeHtml('</a></div>');
-        writeHtml('<div class="ins-imgs-label">'.$name.' '.$last_modified.'</div>');
+        writeHtml('<div class="ins-imgs-label">'.$name.' '.$lastModified.'</div>');
         writeHtml('</li>');
     }
     writeHtml('</ul>');
