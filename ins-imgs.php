@@ -6,7 +6,7 @@
     $imageFolder = 'img/';
 
     # Show only these file types from the image folder
-    $imageTypes = '{*.jpg,*.JPG,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
+    $imageTypes = '{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
 
     # Set to true if you prefer sorting images by name
     # If set to false, images will be sorted by date
