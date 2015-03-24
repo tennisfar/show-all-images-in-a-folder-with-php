@@ -1,5 +1,6 @@
 ---
 title: Test
+layout: post
 ---
 
 # Yo
