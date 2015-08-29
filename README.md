@@ -1,9 +1,9 @@
 Show all images in a folder with PHP
 ------------------------------------
 
-##### A simple PHP tool to list all images in a folder.
+A simple PHP tool to list all images in a folder.
 
-[Live demo](http://pe.ngu.in/show-all-images-in-a-folder-with-php/)
+[Demo](http://pe.ngu.in/show-all-images-in-a-folder-with-php/)
 
 When I work on homepage or mobile layouts, or anything like that, i prefer to first sketch things up on a piece of paper, or in Photoshop. Then after I have a couple of ideas, I take photos of my paper-sketches, make png files of my PSD ideas, and show it all to the client. After receiving feedback I make any changes required, and show everything to the client again. Sometimes it turns out to be a lot of images.
 
@@ -15,11 +15,11 @@ You can link to a specific image as they're link anchored. Just click on the spe
 
 You'll need PHP on your server in order for this to work.
 
-#### Setup
-##### The easy way
+### Setup
+#### The easy way
 This works out of the box, so you can either Git clone the repository, or [download the zip](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/archive/master.zip).
 
-##### The <del>hard</del> <i>other</i> way
+#### The <del>hard</del> <i>other</i> way
 Add [`ins-imgs.php`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.php) and [`ins-imgs.css`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.css) in your root folder (or wherever your index file is).
 
 In your index HTML, insert this:
@@ -29,7 +29,7 @@ In your index HTML, insert this:
 <script src="ins-imgs.php"></script>
 ```
 
-#### Settings
+### Settings
 In [`ins-imgs.php`](https://github.com/mikelothar/show-all-images-in-a-folder-with-php/blob/master/ins-imgs.php#L5-L17) you can find the following settings:
 
 ```php
@@ -50,5 +50,8 @@ In [`ins-imgs.php`](https://github.com/mikelothar/show-all-images-in-a-folder-wi
 
 Make the changes needed for your setup.
 
-#### Help, bugs, pull requests, etc.
+### Help, bugs, pull requests, etc.
 Very welcomed.
+
+### Customized implementations
+[Easy Folio](https://github.com/mikelothar/easy-folio) ([Demo](http://www.lukasspieker.com/hebrides/)) by [Lukas Spieker](https://twitter.com/lukasspieker)
