@@ -1,5 +1,6 @@
 ul.ins-imgs {
     list-style-type: none;
+    padding: 0;
 }
 
 li.ins-imgs-li {
