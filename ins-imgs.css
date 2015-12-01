@@ -17,7 +17,7 @@ div.ins-imgs-img img {
     box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
-div.ins-imgs-img img:active {
+div.ins-imgs-img.zoom img {
     max-width: 100%;
 }
 
