@@ -52,7 +52,7 @@ foreach ($sortedImages as $image) {
 
     # Begin adding
     writeHtml('<li class="ins-imgs-li">');
-    writeHtml('<div class="ins-imgs-img"><a name="' . $image . '" href="#' . $image . '">');
+    writeHtml('<div class="ins-imgs-img" onclick=this.classList.toggle("zoom");><a name="' . $image . '" href="#' . $image . '">');
     writeHtml('<img src="' . $image . '" alt="' . $name . '" title="' . $name . '">');
     writeHtml('</a></div>');
     writeHtml('<div class="ins-imgs-label">' . $name . ' ' . $lastModified . '</div>');
