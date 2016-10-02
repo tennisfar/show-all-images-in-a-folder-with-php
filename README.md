@@ -3,7 +3,7 @@ Show all images in a folder with PHP
 
 A simple PHP tool to list all images in a folder.
 
-[Demo](http://pe.ngu.in/show-all-images-in-a-folder-with-php/)
+[Demo](https://images-in-a-folder-with-php.herokuapp.com/)
 
 When I work on homepage or mobile layouts, or anything like that, i prefer to first sketch things up on a piece of paper, or in Photoshop. Then after I have a couple of ideas, I take photos of my paper-sketches, make png files of my PSD ideas, and show it all to the client. After receiving feedback I make any changes required, and show everything to the client again. Sometimes it turns out to be a lot of images.
 
