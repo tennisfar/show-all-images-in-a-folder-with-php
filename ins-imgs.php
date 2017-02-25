@@ -5,14 +5,10 @@
 *
 */
 
-echo('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
-
 # Path to image folder
 $imageFolder = 'img/';
-
 # Supported images file types
 $imageTypes = '{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
-
 # Images array list generation
 $images = glob($imageFolder . $imageTypes, GLOB_BRACE);
 
@@ -28,7 +24,7 @@ $images = glob($imageFolder . $imageTypes, GLOB_BRACE);
  */
 function sortImagesList(Array $imagesList, $sortByName = false, $newestsFirst = true){
     $sortedImages = array();
-   if ($sortByName) {
+    if ($sortByName) {
         $sortedImages = natsort($imagesList);
     } else {
         # sort by 'last modified' time stamp
@@ -45,25 +41,37 @@ function sortImagesList(Array $imagesList, $sortByName = false, $newestsFirst = 
     return $sortedImages;
 }
 
+/**
+ *
+ * Html images list rendering
+ *
+ * @param    array $imagesList to render
+ * @return    void, echoes Html
+ *
+ */
+function renderImagesHtml(Array $imagesList) {
+    echo('<ul class="ins-imgs">');
+    foreach ($imagesList as $image) {
 
-# Generate the HTML output
-echo('<ul class="ins-imgs">');
-foreach (sortImagesList($images) as $image) {
+        # Get the name of the image, stripped from image folder path and file type extension
+        $name = 'Image name: ' . substr($image, strlen($imageFolder), strpos($image, '.') - strlen($imageFolder));
 
-    # Get the name of the image, stripped from image folder path and file type extension
-    $name = 'Image name: ' . substr($image, strlen($imageFolder), strpos($image, '.') - strlen($imageFolder));
+        # Get the 'last modified' time stamp, make it human readable
+        $lastModified = '(last modified: ' . date('F d Y H:i:s', filemtime($image)) . ')';
 
-    # Get the 'last modified' time stamp, make it human readable
-    $lastModified = '(last modified: ' . date('F d Y H:i:s', filemtime($image)) . ')';
-
-    # Begin adding
-    echo('<li class="ins-imgs-li">');
-    echo('<div class="ins-imgs-img" onclick=this.classList.toggle("zoom");><a name="' . $image . '" href="#' . $image . '">');
-    echo('<img src="' . $image . '" alt="' . $name . '" title="' . $name . '">');
-    echo('</a></div>');
-    echo('<div class="ins-imgs-label">' . $name . ' ' . $lastModified . '</div>');
-    echo('</li>');
+        # Begin addition
+        echo('<li class="ins-imgs-li">');
+        echo('<div class="ins-imgs-img" onclick=this.classList.toggle("zoom");><a name="' . $image . '" href="#' . $image . '">');
+        echo('<img src="' . $image . '" alt="' . $name . '" title="' . $name . '">');
+        echo('</a></div>');
+        echo('<div class="ins-imgs-label">' . $name . ' ' . $lastModified . '</div>');
+        echo('</li>');
+    }
+    echo('</ul>');
 }
-echo('</ul>');
+
+#action render sorted images list with style
+echo('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
+renderImagesHtml(sortImagesList($images));
 
 ?>
