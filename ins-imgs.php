@@ -1,46 +1,54 @@
 <?php
+/**
+*
+* Images management
+*
+*/
+
+echo('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
 
 # Path to image folder
 $imageFolder = 'img/';
 
-# Show only these file types from the image folder
+# Supported images file types
 $imageTypes = '{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
 
-# Set to true if you prefer sorting images by name
-# If set to false, images will be sorted by date
-$sortByImageName = false;
-
-# Set to false if you want the oldest images to appear first
-# This is only used if images are sorted by date (see above)
-$newestImagesFirst = true;
-
-# The rest of the code is technical
-
-# Add images to array
+# Images array list generation
 $images = glob($imageFolder . $imageTypes, GLOB_BRACE);
 
-# Sort images
-if ($sortByImageName) {
-    $sortedImages = $images;
-    natsort($sortedImages);
-} else {
-    # Sort the images based on its 'last modified' time stamp
+/**
+ *
+ * Sort images list
+ *
+ * @param    array $imagesList to sort
+ * @param    bool  $sortByName to sort by date. Default false, images will be sorted by date
+ * @param    bool  $newestsFirst if sorted by date, orderer by newests
+ * @return    array $sortedImages
+ *
+ */
+function sortImagesList(Array $imagesList, $sortByName = false, $newestsFirst = true){
     $sortedImages = array();
-    $count = count($images);
-    for ($i = 0; $i < $count; $i++) {
-        $sortedImages[date('YmdHis', filemtime($images[$i])) . $i] = $images[$i];
-    }
-    # Sort images in array
-    if ($newestImagesFirst) {
-        krsort($sortedImages);
+   if ($sortByName) {
+        $sortedImages = natsort($imagesList);
     } else {
-        ksort($sortedImages);
+        # sort by 'last modified' time stamp
+        $count = count($imagesList);
+        for ($i = 0; $i < $count; $i++) {
+            $sortedImages[date('YmdHis', filemtime($imagesList[$i])) . $i] = $imagesList[$i];
+        }
+        if ($newestsFirst) {
+            krsort($sortedImages);
+        } else {
+            ksort($sortedImages);
+        }
     }
+    return $sortedImages;
 }
 
+
 # Generate the HTML output
-writeHtml('<ul class="ins-imgs">');
-foreach ($sortedImages as $image) {
+echo('<ul class="ins-imgs">');
+foreach (sortImagesList($images) as $image) {
 
     # Get the name of the image, stripped from image folder path and file type extension
     $name = 'Image name: ' . substr($image, strlen($imageFolder), strpos($image, '.') - strlen($imageFolder));
@@ -49,18 +57,13 @@ foreach ($sortedImages as $image) {
     $lastModified = '(last modified: ' . date('F d Y H:i:s', filemtime($image)) . ')';
 
     # Begin adding
-    writeHtml('<li class="ins-imgs-li">');
-    writeHtml('<div class="ins-imgs-img" onclick=this.classList.toggle("zoom");><a name="' . $image . '" href="#' . $image . '">');
-    writeHtml('<img src="' . $image . '" alt="' . $name . '" title="' . $name . '">');
-    writeHtml('</a></div>');
-    writeHtml('<div class="ins-imgs-label">' . $name . ' ' . $lastModified . '</div>');
-    writeHtml('</li>');
+    echo('<li class="ins-imgs-li">');
+    echo('<div class="ins-imgs-img" onclick=this.classList.toggle("zoom");><a name="' . $image . '" href="#' . $image . '">');
+    echo('<img src="' . $image . '" alt="' . $name . '" title="' . $name . '">');
+    echo('</a></div>');
+    echo('<div class="ins-imgs-label">' . $name . ' ' . $lastModified . '</div>');
+    echo('</li>');
 }
-writeHtml('</ul>');
+echo('</ul>');
 
-writeHtml('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
-
-# Convert HTML to JS
-function writeHtml($html) {
-    echo "document.write('" . $html . "');\n";
-}
+?>
