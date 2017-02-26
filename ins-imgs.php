@@ -1,68 +1,87 @@
 <?php
-# To prevent browser error output
-header('Content-Type: text/javascript; charset=UTF-8');
+/**
+*
+* Images management
+*
+* Configuration :
+*   folderPath : path to image folder,
+*   types : Supported images file types
+*
+*/
 
-# Path to image folder
-$imageFolder = 'img/';
+$imagesConfig = array(
+    "folderPath" => "img/",
+    "types" => "{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}"
+);
 
-# Show only these file types from the image folder
-$imageTypes = '{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
+# Images array list generation
+$images = glob($imagesConfig["folderPath"].$imagesConfig["types"], GLOB_BRACE);
 
-# Set to true if you prefer sorting images by name
-# If set to false, images will be sorted by date
-$sortByImageName = false;
-
-# Set to false if you want the oldest images to appear first
-# This is only used if images are sorted by date (see above)
-$newestImagesFirst = true;
-
-# The rest of the code is technical
-
-# Add images to array
-$images = glob($imageFolder . $imageTypes, GLOB_BRACE);
-
-# Sort images
-if ($sortByImageName) {
-    $sortedImages = $images;
-    natsort($sortedImages);
-} else {
-    # Sort the images based on its 'last modified' time stamp
+/**
+ *
+ * Sort images list
+ *
+ * @param    array $imagesList to sort
+ * @param    bool  $sortByName to sort by date. Default false, images will be sorted by date
+ * @param    bool  $newestsFirst if sorted by date, orderer by newests
+ * @return    array $sortedImages
+ *
+ */
+function sortImagesList(Array $imagesList, $sortByName = false, $newestsFirst = true){
     $sortedImages = array();
-    $count = count($images);
-    for ($i = 0; $i < $count; $i++) {
-        $sortedImages[date('YmdHis', filemtime($images[$i])) . $i] = $images[$i];
-    }
-    # Sort images in array
-    if ($newestImagesFirst) {
-        krsort($sortedImages);
+    if ($sortByName) {
+        $sortedImages = natsort($imagesList);
     } else {
-        ksort($sortedImages);
+        # sort by 'last modified' time stamp
+        $count = count($imagesList);
+        for ($i = 0; $i < $count; $i++) {
+            $sortedImages[date('YmdHis', filemtime($imagesList[$i])) . $i] = $imagesList[$i];
+        }
+        if ($newestsFirst) {
+            krsort($sortedImages);
+        } else {
+            ksort($sortedImages);
+        }
     }
+    return $sortedImages;
 }
 
-# Generate the HTML output
-writeHtml('<ul class="ins-imgs">');
-foreach ($sortedImages as $image) {
+/**
+ *
+ * Html images list rendering
+ *
+ * @param    array $imagesList to render
+ * @return    void, echoes Html
+ *
+ */
+function renderImagesHtml(Array $imagesList) {
 
-    # Get the name of the image, stripped from image folder path and file type extension
-    $name = 'Image name: ' . substr($image, strlen($imageFolder), strpos($image, '.') - strlen($imageFolder));
+    echo('<ul class="ins-imgs">');
+    foreach ($imagesList as $image) {
+        # Get image name without path and extension
+        $imageName = basename($image);
+        $imageName = pathinfo($imageName, PATHINFO_FILENAME);
 
-    # Get the 'last modified' time stamp, make it human readable
-    $lastModified = '(last modified: ' . date('F d Y H:i:s', filemtime($image)) . ')';
+        # Get 'last modified' date
+        $lastModifiedDate = date('F d Y H:i:s', filemtime($image));
 
-    # Begin adding
-    writeHtml('<li class="ins-imgs-li">');
-    writeHtml('<div class="ins-imgs-img" onclick=this.classList.toggle("zoom");><a name="' . $image . '" href="#' . $image . '">');
-    writeHtml('<img src="' . $image . '" alt="' . $name . '" title="' . $name . '">');
-    writeHtml('</a></div>');
-    writeHtml('<div class="ins-imgs-label">' . $name . ' ' . $lastModified . '</div>');
-    writeHtml('</li>');
+        $imageLabel = 'Image name: ' . $imageName;
+        $lastModifiedLabel = '(last modified: ' . $lastModifiedDate . ')';
+
+        # Begin addition
+        echo('<li class="ins-imgs-li">');
+        echo('<div class="ins-imgs-img" onclick=this.classList.toggle("zoom");><a name="' . $image . '" href="#' . $image . '">');
+        echo('<img src="' . $image . '" alt="' . $imageName . '" title="' . $imageName . '">');
+        echo('</a></div>');
+        echo('<div class="ins-imgs-label">' . $imageLabel . ' ' . $lastModifiedLabel . '</div>');
+        echo('</li>');
+    }
+    echo('</ul>');
+
 }
-writeHtml('</ul>');
 
-writeHtml('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
+# Action render sorted images list with style
+echo('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
+renderImagesHtml(sortImagesList($images));
 
-# Convert HTML to JS
-function writeHtml($html) {
-    echo "document.write('" . $html . "');\n";
-}
+?>
