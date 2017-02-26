@@ -3,14 +3,19 @@
 *
 * Images management
 *
+* Configuration :
+*   folderPath : path to image folder,
+*   types : Supported images file types
+*
 */
 
-# Path to image folder
-$imageFolder = 'img/';
-# Supported images file types
-$imageTypes = '{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
+$imagesConfig = array(
+    "folderPath" => "img/",
+    "types" => "{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}"
+);
+
 # Images array list generation
-$images = glob($imageFolder . $imageTypes, GLOB_BRACE);
+$images = glob($imagesConfig["folderPath"].$imagesConfig["types"], GLOB_BRACE);
 
 /**
  *
@@ -50,27 +55,32 @@ function sortImagesList(Array $imagesList, $sortByName = false, $newestsFirst = 
  *
  */
 function renderImagesHtml(Array $imagesList) {
+
     echo('<ul class="ins-imgs">');
     foreach ($imagesList as $image) {
+        # Get image name without path and extension
+        $imageName = basename($image);
+        $imageName = pathinfo($imageName, PATHINFO_FILENAME);
 
-        # Get the name of the image, stripped from image folder path and file type extension
-        $name = 'Image name: ' . substr($image, strlen($imageFolder), strpos($image, '.') - strlen($imageFolder));
+        # Get 'last modified' date
+        $lastModifiedDate = date('F d Y H:i:s', filemtime($image));
 
-        # Get the 'last modified' time stamp, make it human readable
-        $lastModified = '(last modified: ' . date('F d Y H:i:s', filemtime($image)) . ')';
+        $imageLabel = 'Image name: ' . $imageName;
+        $lastModifiedLabel = '(last modified: ' . $lastModifiedDate . ')';
 
         # Begin addition
         echo('<li class="ins-imgs-li">');
         echo('<div class="ins-imgs-img" onclick=this.classList.toggle("zoom");><a name="' . $image . '" href="#' . $image . '">');
-        echo('<img src="' . $image . '" alt="' . $name . '" title="' . $name . '">');
+        echo('<img src="' . $image . '" alt="' . $imageName . '" title="' . $imageName . '">');
         echo('</a></div>');
-        echo('<div class="ins-imgs-label">' . $name . ' ' . $lastModified . '</div>');
+        echo('<div class="ins-imgs-label">' . $imageLabel . ' ' . $lastModifiedLabel . '</div>');
         echo('</li>');
     }
     echo('</ul>');
+
 }
 
-#action render sorted images list with style
+# Action render sorted images list with style
 echo('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
 renderImagesHtml(sortImagesList($images));
 
