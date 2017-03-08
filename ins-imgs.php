@@ -55,29 +55,44 @@ function sortImagesList(Array $imagesList, $sortByName = false, $newestsFirst = 
  *
  */
 function renderImagesHtml(Array $imagesList) {
-
     echo('<ul class="ins-imgs">');
     foreach ($imagesList as $image) {
-        # Get image name without path and extension
-        $imageName = basename($image);
-        $imageName = pathinfo($imageName, PATHINFO_FILENAME);
-
-        # Get 'last modified' date
-        $lastModifiedDate = date('F d Y H:i:s', filemtime($image));
-
-        $imageLabel = 'Image name: ' . $imageName;
-        $lastModifiedLabel = '(last modified: ' . $lastModifiedDate . ')';
-
-        # Begin addition
-        echo('<li class="ins-imgs-li">');
-        echo('<div class="ins-imgs-img" onclick=this.classList.toggle("zoom");><a name="' . $image . '" href="#' . $image . '">');
-        echo('<img src="' . $image . '" alt="' . $imageName . '" title="' . $imageName . '">');
-        echo('</a></div>');
-        echo('<div class="ins-imgs-label">' . $imageLabel . ' ' . $lastModifiedLabel . '</div>');
-        echo('</li>');
+        renderImageHtml($image);
     }
     echo('</ul>');
+}
 
+/**
+ *
+ * Html image rendering
+ *
+ * @param    string $image to render
+ * @return    void, echoes Html
+ *
+ */
+function renderImageHtml($image) {
+    # Get image name without path and extension
+    $imageName = basename($image);
+    $imageName = pathinfo($imageName, PATHINFO_FILENAME);
+
+    # Get 'last modified' date
+    $lastModifiedDate = date('F d Y H:i:s', filemtime($image));
+
+    $imageLabel = 'Image name: ' . $imageName;
+    $lastModifiedLabel = '(last modified: ' . $lastModifiedDate . ')';
+    $label = $imageLabel.' '.$lastModifiedLabel;
+
+    # Begin addition
+    echo <<<EOT
+    <li class="ins-imgs-li">
+        <div class="ins-imgs-img" onclick=this.classList.toggle("zoom");>
+            <a name="$image" href="#$image ">
+                <img src="$image" alt="$imageName" title="$imageName">
+            </a>
+        </div>
+        <div class="ins-imgs-label">$label</div>
+    </li>
+EOT;
 }
 
 # Action render sorted images list with style
