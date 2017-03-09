@@ -7,14 +7,13 @@
 */
 
 class Pagination {
-    private $limit = 3;
+    private $limit;
     private $total;
     public $last;
 
 
     public function __construct( Array $images) {
         $this->total = count($images);
-        $this->last = ceil( $this->total / $this->limit );
     }
 
     /**
@@ -26,10 +25,12 @@ class Pagination {
      * @return    Array $pageImages, list images to display
      *
      */
-    public function getPageData( Array $images, $page = 1 ) {
+    public function getPageData( Array $images, $limit, $page = 1) {
+        $this->limit = $limit;
+        $this->last = ceil( $this->total / $limit );
         $page = $page-1; // for human read
-        $offset = $page * $this->limit;
-        $pageImages = array_slice($images, $offset, $this->limit);
+        $offset = $page * $limit;
+        $pageImages = array_slice($images, $offset, $limit);
         return $pageImages;
     }
 

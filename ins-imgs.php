@@ -8,12 +8,17 @@ require_once "Pagination.php";
 * Configuration :
 *   folderPath : path to image folder,
 *   types : Supported images file types
+*   pagination : [usePagination : true/false, imagesPerPage : number of images per pages]
 *
 */
 
 $imagesConfig = array(
     "folderPath" => "img/",
-    "types" => "{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}"
+    "types" => "{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}",
+    "pagination" => array (
+            "usePagination" => false,
+            "imagesPerPage" => 5
+            )
 );
 
 # Images array list generation
@@ -100,15 +105,17 @@ $images = sortImagesList($images);
 $htmlPagination = false;
 
 // pagination
-if (isset($_GET['page']) && is_numeric($_GET['page']) && ($_GET['page'] > 0)) {
-    $Pagination  = new Pagination($images);
-    $pageNumber = (int) $_GET['page'];
-    // last page maximum value
-    $pageNumber = ($pageNumber <= $Pagination->last) ? $pageNumber : $Pagination->last;
-    $imagesToDisplay = $Pagination->getPageData($images, $pageNumber);
-    $htmlPagination = $Pagination->renderPaginationHtml($pageNumber);
+if ($imagesConfig['pagination']['usePagination']) {
+    if (isset($_GET['page']) && is_numeric($_GET['page']) && ($_GET['page'] > 0)) {
+        $Pagination  = new Pagination($images);
+        $pageNumber = (int) $_GET['page'];
+        $imagesToDisplay = $Pagination->getPageData($images, $imagesConfig['pagination']['imagesPerPage'], $pageNumber);
+        $htmlPagination = $Pagination->renderPaginationHtml($pageNumber);
+    } else {
+        $imagesToDisplay = $images;
+    }
 } else {
-    $imagesToDisplay = $images;
+        $imagesToDisplay = $images;
 }
 
 # Action render images list with style
