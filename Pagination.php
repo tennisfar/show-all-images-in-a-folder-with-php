@@ -11,7 +11,6 @@ class Pagination {
     private $total;
     public $last;
 
-
     public function __construct( Array $images) {
         $this->total = count($images);
     }

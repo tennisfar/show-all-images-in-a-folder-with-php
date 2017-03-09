@@ -106,16 +106,15 @@ $htmlPagination = false;
 
 // pagination
 if ($imagesConfig['pagination']['usePagination']) {
+    $Pagination  = new Pagination($images);
+    $pageNumber = 1;
     if (isset($_GET['page']) && is_numeric($_GET['page']) && ($_GET['page'] > 0)) {
-        $Pagination  = new Pagination($images);
         $pageNumber = (int) $_GET['page'];
-        $imagesToDisplay = $Pagination->getPageData($images, $imagesConfig['pagination']['imagesPerPage'], $pageNumber);
-        $htmlPagination = $Pagination->renderPaginationHtml($pageNumber);
-    } else {
-        $imagesToDisplay = $images;
     }
+    $imagesToDisplay = $Pagination->getPageData($images, $imagesConfig['pagination']['imagesPerPage'], $pageNumber);
+    $htmlPagination = $Pagination->renderPaginationHtml($pageNumber);
 } else {
-        $imagesToDisplay = $images;
+    $imagesToDisplay = $images;
 }
 
 # Action render images list with style

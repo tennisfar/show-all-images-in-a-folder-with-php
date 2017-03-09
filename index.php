@@ -11,6 +11,5 @@
 <body>
     <!-- images insertion -->
     <?php include "ins-imgs.php"; ?>
-
 </body>
 </html>
