@@ -1,4 +1,10 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+require_once "Pagination.php";
+
 /**
 *
 * Images management
@@ -55,11 +61,9 @@ function sortImagesList(Array $imagesList, $sortByName = false, $newestsFirst = 
  *
  */
 function renderImagesHtml(Array $imagesList) {
-    echo('<ul class="ins-imgs">');
     foreach ($imagesList as $image) {
         renderImageHtml($image);
     }
-    echo('</ul>');
 }
 
 /**
@@ -95,8 +99,24 @@ function renderImageHtml($image) {
 EOT;
 }
 
-# Action render sorted images list with style
+// sort images
+$images = sortImagesList($images);
+
+// pagination
+$Pagination  = new Pagination($images);
+if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+   $imagesToDisplay = $Pagination->getPageData($images, (int) $_GET['page']);
+} else {
+   $imagesToDisplay = $images;
+}
+
+# Action render images list with style
 echo('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
-renderImagesHtml(sortImagesList($images));
+echo('<ul class="ins-imgs">');
+renderImagesHtml($imagesToDisplay);
+echo('</ul>');
+echo $Pagination->renderPagination();
+
+
 
 ?>
