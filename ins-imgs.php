@@ -104,13 +104,15 @@ $images = sortImagesList($images);
 $htmlPagination = false;
 
 // pagination
-if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-    $pageNumber = (int) $_GET['page'];
+if (isset($_GET['page']) && is_numeric($_GET['page']) && ($_GET['page'] > 0)) {
     $Pagination  = new Pagination($images);
+    $pageNumber = (int) $_GET['page'];
+    // last page maximum value
+    $pageNumber = ($pageNumber <= $Pagination->last) ? $pageNumber : $Pagination->last;
     $imagesToDisplay = $Pagination->getPageData($images, $pageNumber);
-    $htmlPagination = $Pagination->renderPagination($pageNumber);
+    $htmlPagination = $Pagination->renderPaginationHtml($pageNumber);
 } else {
-   $imagesToDisplay = $images;
+    $imagesToDisplay = $images;
 }
 
 # Action render images list with style
