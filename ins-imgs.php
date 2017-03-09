@@ -101,11 +101,14 @@ EOT;
 
 // sort images
 $images = sortImagesList($images);
+$htmlPagination = false;
 
 // pagination
-$Pagination  = new Pagination($images);
 if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-   $imagesToDisplay = $Pagination->getPageData($images, (int) $_GET['page']);
+    $pageNumber = (int) $_GET['page'];
+    $Pagination  = new Pagination($images);
+    $imagesToDisplay = $Pagination->getPageData($images, $pageNumber);
+    $htmlPagination = $Pagination->renderPagination($pageNumber);
 } else {
    $imagesToDisplay = $images;
 }
@@ -115,8 +118,6 @@ echo('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
 echo('<ul class="ins-imgs">');
 renderImagesHtml($imagesToDisplay);
 echo('</ul>');
-echo $Pagination->renderPagination();
-
-
+echo $htmlPagination;
 
 ?>
