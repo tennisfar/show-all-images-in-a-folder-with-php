@@ -10,12 +10,7 @@
 </head>
 <body>
     <!-- images insertion -->
-    <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    include_once "Pagination.php";
-    include "ins-imgs.php";
-    ?>
+    <?php include "ins-imgs.php"; ?>
 
 </body>
 </html>
