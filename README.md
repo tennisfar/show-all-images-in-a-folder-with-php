@@ -4,7 +4,9 @@ Show all images in a folder with PHP
 A simple webpage to display all images in a folder with PHP.
 
 This project is an evolution of https://github.com/lthr/show-all-images-in-a-folder-with-php.
+
 It requires PHP.
+
 
 Images will display up to a max width of 900 pixels. Images larger than 900 pixels will show their full size if you click it.
 
