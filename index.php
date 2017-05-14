@@ -9,9 +9,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-
-    <!-- insert images here -->
-    <script src="ins-imgs.php"></script>
-
+    <!-- images insertion -->
+    <?php include "ins-imgs.php"; ?>
 </body>
 </html>

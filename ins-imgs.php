@@ -1,68 +1,127 @@
 <?php
-# To prevent browser error output
-header('Content-Type: text/javascript; charset=UTF-8');
+require_once "Pagination.php";
 
-# Path to image folder
-$imageFolder = 'img/';
+/**
+*
+* Images management
+*
+* Configuration :
+*   folderPath : path to image folder,
+*   types : Supported images file types
+*   pagination : [usePagination : true/false, imagesPerPage : number of images per pages]
+*
+*/
 
-# Show only these file types from the image folder
-$imageTypes = '{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}';
+$imagesConfig = array(
+    "folderPath" => "img/",
+    "types" => "{*.jpg,*.JPG,*.jpeg,*.JPEG,*.png,*.PNG,*.gif,*.GIF}",
+    "pagination" => array (
+            "usePagination" => false,
+            "imagesPerPage" => 5
+            )
+);
 
-# Set to true if you prefer sorting images by name
-# If set to false, images will be sorted by date
-$sortByImageName = false;
+# Images array list generation
+$images = glob($imagesConfig["folderPath"].$imagesConfig["types"], GLOB_BRACE);
 
-# Set to false if you want the oldest images to appear first
-# This is only used if images are sorted by date (see above)
-$newestImagesFirst = true;
-
-# The rest of the code is technical
-
-# Add images to array
-$images = glob($imageFolder . $imageTypes, GLOB_BRACE);
-
-# Sort images
-if ($sortByImageName) {
-    $sortedImages = $images;
-    natsort($sortedImages);
-} else {
-    # Sort the images based on its 'last modified' time stamp
+/**
+ *
+ * Sort images list
+ *
+ * @param    array $imagesList to sort
+ * @param    bool  $sortByName to sort by date. Default false, images will be sorted by date
+ * @param    bool  $newestsFirst if sorted by date, orderer by newests
+ * @return    array $sortedImages
+ *
+ */
+function sortImagesList(Array $imagesList, $sortByName = false, $newestsFirst = true){
     $sortedImages = array();
-    $count = count($images);
-    for ($i = 0; $i < $count; $i++) {
-        $sortedImages[date('YmdHis', filemtime($images[$i])) . $i] = $images[$i];
-    }
-    # Sort images in array
-    if ($newestImagesFirst) {
-        krsort($sortedImages);
+    if ($sortByName) {
+        $sortedImages = natsort($imagesList);
     } else {
-        ksort($sortedImages);
+        # sort by 'last modified' time stamp
+        $count = count($imagesList);
+        for ($i = 0; $i < $count; $i++) {
+            $sortedImages[date('YmdHis', filemtime($imagesList[$i])) . $i] = $imagesList[$i];
+        }
+        if ($newestsFirst) {
+            krsort($sortedImages);
+        } else {
+            ksort($sortedImages);
+        }
+    }
+    return $sortedImages;
+}
+
+/**
+ *
+ * Html images list rendering
+ *
+ * @param    array $imagesList to render
+ * @return    void, echoes Html
+ *
+ */
+function renderImagesHtml(Array $imagesList) {
+    foreach ($imagesList as $image) {
+        renderImageHtml($image);
     }
 }
 
-# Generate the HTML output
-writeHtml('<ul class="ins-imgs">');
-foreach ($sortedImages as $image) {
+/**
+ *
+ * Html image rendering
+ *
+ * @param    string $image to render
+ * @return    void, echoes Html
+ *
+ */
+function renderImageHtml($image) {
+    # Get image name without path and extension
+    $imageName = basename($image);
+    $imageName = pathinfo($imageName, PATHINFO_FILENAME);
 
-    # Get the name of the image, stripped from image folder path and file type extension
-    $name = 'Image name: ' . substr($image, strlen($imageFolder), strpos($image, '.') - strlen($imageFolder));
+    # Get 'last modified' date
+    $lastModifiedDate = date('F d Y H:i:s', filemtime($image));
 
-    # Get the 'last modified' time stamp, make it human readable
-    $lastModified = '(last modified: ' . date('F d Y H:i:s', filemtime($image)) . ')';
+    $imageLabel = 'Image name: ' . $imageName;
+    $lastModifiedLabel = '(last modified: ' . $lastModifiedDate . ')';
+    $label = $imageLabel.' '.$lastModifiedLabel;
 
-    # Begin adding
-    writeHtml('<li class="ins-imgs-li">');
-    writeHtml('<div class="ins-imgs-img" onclick=this.classList.toggle("zoom");><a name="' . $image . '" href="#' . $image . '">');
-    writeHtml('<img src="' . $image . '" alt="' . $name . '" title="' . $name . '">');
-    writeHtml('</a></div>');
-    writeHtml('<div class="ins-imgs-label">' . $name . ' ' . $lastModified . '</div>');
-    writeHtml('</li>');
+    # Begin addition
+    echo <<<EOT
+    <li class="ins-imgs-li">
+        <div class="ins-imgs-img" onclick=this.classList.toggle("zoom");>
+            <a name="$image" href="#$image ">
+                <img src="$image" alt="$imageName" title="$imageName">
+            </a>
+        </div>
+        <div class="ins-imgs-label">$label</div>
+    </li>
+EOT;
 }
-writeHtml('</ul>');
 
-writeHtml('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
+// sort images
+$images = sortImagesList($images);
+$htmlPagination = false;
 
-# Convert HTML to JS
-function writeHtml($html) {
-    echo "document.write('" . $html . "');\n";
+// pagination
+if ($imagesConfig['pagination']['usePagination']) {
+    $Pagination  = new Pagination($images);
+    $pageNumber = 1;
+    if (isset($_GET['page']) && is_numeric($_GET['page']) && ($_GET['page'] > 0)) {
+        $pageNumber = (int) $_GET['page'];
+    }
+    $imagesToDisplay = $Pagination->getPageData($images, $imagesConfig['pagination']['imagesPerPage'], $pageNumber);
+    $htmlPagination = $Pagination->renderPaginationHtml($pageNumber);
+} else {
+    $imagesToDisplay = $images;
 }
+
+# Action render images list with style
+echo('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
+echo('<ul class="ins-imgs">');
+renderImagesHtml($imagesToDisplay);
+echo('</ul>');
+echo $htmlPagination;
+
+?>
