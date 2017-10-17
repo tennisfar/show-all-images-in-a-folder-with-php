@@ -9,7 +9,7 @@ You can link to a specific image as they're link anchored. Just click on the spe
 
 [Demo](https://images-in-a-folder-with-php.herokuapp.com/) (might take up to 30 seconds to start up the Heroku instance)
 
-[Support](https://join.slack.com/t/mikelothar/shared_invite/enQtMjU3MDEyNjA3MzI4LWY0ZjZhNjA2Y2NhMjE1YjE5N2QwZTM5YzU1NTdmMDUwYWRjODUxMGZmZTk2M2YxYjhlMDBiNTc3MWQzZTdhYjQ)
+[Slack](https://join.slack.com/t/mikelothar/shared_invite/enQtMjU3MDEyNjA3MzI4LWY0ZjZhNjA2Y2NhMjE1YjE5N2QwZTM5YzU1NTdmMDUwYWRjODUxMGZmZTk2M2YxYjhlMDBiNTc3MWQzZTdhYjQ)
 
 ### Setup
 #### The easy way
