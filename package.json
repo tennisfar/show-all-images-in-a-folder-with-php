@@ -1,0 +1,12 @@
+{
+  "name": "show-all-images-in-a-folder-with-php",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "scripts": {
+    "deploy": "node deploy/ftpdelete.js ; node deploy/ftpupload.js"
+  },
+  "devDependencies": {
+    "ftp-deploy": "^1.2.2"
+  }
+}
