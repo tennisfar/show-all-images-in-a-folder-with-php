@@ -47,6 +47,6 @@ function getConfiguration() {
     password: process.env.ftp_password,
     localRoot: process.env.ftp_localPath,
     remoteRoot: process.env.ftp_remotePath,
-    exclude: ['.git', 'node_modules', 'deploy', '.travis.yml', 'README.md', '.htaccess', '.gitignore']
+    include: ['index.html', '*.php', '*.css']
   };
 }
