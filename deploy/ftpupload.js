@@ -48,6 +48,6 @@ function getConfiguration() {
     localRoot: process.env.ftp_localPath,
     remoteRoot: process.env.ftp_remotePath,
     exclude: ['*', '.*'],
-    include: ['index.html', '*.php', '*.css', 'img/*']
+    include: ['index.html', '*.php', '*.css', 'img', 'img/*']
   };
 }
