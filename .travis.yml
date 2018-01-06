@@ -1,6 +1,6 @@
 branches:
   only:
-    - deployX
+    - deploy
 language: node_js
 node_js:
   - "stable"
