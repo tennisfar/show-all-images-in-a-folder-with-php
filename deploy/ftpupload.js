@@ -47,6 +47,6 @@ function getConfiguration() {
     password: process.env.ftp_password,
     localRoot: process.env.ftp_localPath,
     remoteRoot: process.env.ftp_remotePath,
-    include: ['index.html', '*.php', '*.css']
+    include: ['index.html', '*.php', '*.css', 'img']
   };
 }
