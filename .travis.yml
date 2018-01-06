@@ -1,3 +1,4 @@
-deploy:
-  on:
-    branch: release
+branches:
+  only:
+    - deployXXX
+    
