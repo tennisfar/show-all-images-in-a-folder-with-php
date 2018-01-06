@@ -46,6 +46,7 @@ function getConfiguration() {
     username: process.env.ftp_user,
     password: process.env.ftp_password,
     localRoot: process.env.ftp_localPath,
-    remoteRoot: process.env.ftp_remotePath
+    remoteRoot: process.env.ftp_remotePath,
+    exclude: ['.git', '.idea', 'tmp/*', 'build/*', 'node_modules/*', 'deploy/*', '.travis.yml', 'README.md', '.htaccess', '.gitignore']
   };
 }
