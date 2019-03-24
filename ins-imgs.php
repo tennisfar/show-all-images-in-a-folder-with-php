@@ -41,24 +41,19 @@ if ($sortByImageName) {
 }
 
 # Generate the HTML output
-writeHtml('<ul class="ins-imgs">');
+writeHtml('<div class="ins-img-container">');
 foreach ($sortedImages as $image) {
 
     # Get the name of the image, stripped from image folder path and file type extension
-    $name = 'Image name: ' . substr($image, strlen($imageFolder), strpos($image, '.') - strlen($imageFolder));
-
-    # Get the 'last modified' time stamp, make it human readable
-    $lastModified = '(last modified: ' . date('F d Y H:i:s', filemtime($image)) . ')';
+    $name = substr($image, strlen($imageFolder), strpos($image, '.') - strlen($imageFolder));
 
     # Begin adding
-    writeHtml('<li class="ins-imgs-li">');
-    writeHtml('<div class="ins-imgs-img" onclick=this.classList.toggle("zoom");><a name="' . $image . '" href="#' . $image . '">');
+    writeHtml('<a name="' . $image . '" href="#' . $image . '" onclick=this.classList.toggle("zoom");>');
     writeHtml('<img src="' . $image . '" alt="' . $name . '" title="' . $name . '">');
-    writeHtml('</a></div>');
-    writeHtml('<div class="ins-imgs-label">' . $name . ' ' . $lastModified . '</div>');
-    writeHtml('</li>');
+    writeHtml('<div class="ins-imgs-label">' . $name . '</div>');
+    writeHtml('</a>');
 }
-writeHtml('</ul>');
+writeHtml('</div>');
 
 writeHtml('<link rel="stylesheet" type="text/css" href="ins-imgs.css">');
 
